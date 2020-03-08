@@ -1,6 +1,8 @@
 package pl.sda.zamowienia;
 
+import pl.sda.zamowienia.exceptions.price.CustomerNameException;
 import pl.sda.zamowienia.exceptions.price.PriceException;
+import pl.sda.zamowienia.exceptions.price.ProductNameException;
 
 public class Product {
     private String name;
@@ -20,8 +22,12 @@ public class Product {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setName(String name) throws ProductNameException {
+        if (name.equals(name.toUpperCase())) {
+            this.name = name;
+        } else {
+            throw new ProductNameException("TYLKO WIELKIE LITERY!!!!");
+        }
     }
 
     public double getPrice() {

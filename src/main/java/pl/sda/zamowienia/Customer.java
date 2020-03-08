@@ -1,6 +1,7 @@
 package pl.sda.zamowienia;
 
 import pl.sda.zamowienia.exceptions.price.AgeException;
+import pl.sda.zamowienia.exceptions.price.CustomerNameException;
 import pl.sda.zamowienia.exceptions.price.EmailException;
 
 public class Customer {
@@ -23,16 +24,25 @@ public class Customer {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setName(String name) throws CustomerNameException {
+        if (name.equals(name.toUpperCase())) {
+            this.name = name;
+        } else {
+            throw new CustomerNameException("TYLKO WIELKIE LITERY!!!!");
+        }
     }
 
     public String getSurname() {
         return surname;
     }
 
-    public void setSurname(String surname) {
-        this.surname = surname;
+    public void setSurname(String surname) throws CustomerNameException {
+        if (!surname.equals(surname.toUpperCase())) {
+            throw new CustomerNameException("TYLKO WIELKIE LITERY!!!!");
+        } else {
+            this.surname = surname;
+        }
+
     }
 
     public int getAge() {
@@ -40,10 +50,9 @@ public class Customer {
     }
 
     public void setAge(int age) throws AgeException {
-        if(checkAge(age)) {
+        if (checkAge(age)) {
             this.age = age;
-        }
-        else{
+        } else {
             throw new AgeException("Klient musi być pełnoletni");
         }
     }
@@ -53,26 +62,25 @@ public class Customer {
     }
 
     public void setEmail(String email) throws EmailException {
-        if(!this.checkEmail(email)){
+        if (!this.checkEmail(email)) {
             throw new EmailException("Niepoprawny Email");
-        }
-        else {
+        } else {
             this.email = email;
         }
     }
-    public boolean checkAge(int age){
-        if(age>=18){
+
+    public boolean checkAge(int age) {
+        if (age >= 18) {
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }
-    public boolean checkEmail(String email){
+
+    public boolean checkEmail(String email) {
         return email.contains("@");
     }
 
 
-
-    }
 }
+
